@@ -1,72 +1,16 @@
 const API_KEY = `f6707fe48c0e27df16600fa9efd12133`
 const image_path = `https://image.tmdb.org/t/p/w1280/`
 
-// BANNER
-
-const slider = document.querySelector('.slider');
-const leftArrow = document.querySelector('.left');
-const rightArrow = document.querySelector('.right');
-const indicatorParents = document.querySelector('.controls ul');
-const totalSlides = 4;
-
-var sectionIndex = 0;
-var autoSlideInterval; 
-
-function setIndex() {
-    document.querySelector('.controls .selected').classList.remove('selected');
-    slider.style.transform = 'translate(' + (sectionIndex * -25) + '%)';
-    indicatorParents.children[sectionIndex].classList.add('selected');
-}
-
-function nextSlide() {
-    sectionIndex = (sectionIndex < totalSlides - 1) ? sectionIndex + 1 : 0;
-    setIndex();
-}
-
-function startAutoSlider() {
-    autoSlideInterval = setInterval(nextSlide, 3000); 
-}
-
-function stopAutoSlider() {
-    clearInterval(autoSlideInterval);
-}
-
-document.querySelector('.controls li').classList.add('selected');
-
-document.querySelectorAll('.controls li').forEach(function(indicator, ind) {
-    indicator.addEventListener('click', function() {
-        sectionIndex = ind;
-        setIndex();
-        stopAutoSlider();
-    });
-});
-
-leftArrow.addEventListener('click', function() {
-    sectionIndex = (sectionIndex > 0) ? sectionIndex - 1 : totalSlides - 1;
-    setIndex();
-    stopAutoSlider(); 
-});
-
-rightArrow.addEventListener('click', function() {
-    sectionIndex = (sectionIndex < totalSlides - 1) ? sectionIndex + 1 : 0;
-    setIndex();
-    stopAutoSlider(); 
-});
-
-startAutoSlider();
-
-
 // SEARCH
 const searchButton = document.querySelector('.search button');
 const searchInput = document.querySelector('.search input');
 const searchResults = document.querySelector('.search-results');
-const banners = document.querySelectorAll('.banner1, .trending, .favorites, .watchlist');
+const exploreElements = document.querySelectorAll('.explore');
 
 searchButton.addEventListener('click', async () => {
     const searchTerm = searchInput.value;
     if (searchTerm) {
-    
-        banners.forEach(banner => banner.style.display = 'none');
+        exploreElements.forEach(exp => exp.style.display = 'none');
 
         searchResults.style.display = 'block';
 
@@ -109,164 +53,7 @@ function displaySearchResults(results) {
 
     const cards = document.querySelectorAll('.card')
     add_click_effect_to_card(cards)
-}
 
-const trending_el = document.querySelector('.trending .movies-grid')
-
-// Trending Movies
-get_trending_movies()
-async function get_trending_movies () {
-    const resp = await fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`)
-    const respData = await resp.json()
-    return respData.results
-}
-
-add_to_dom_trending()
-async function add_to_dom_trending () {
-
-    const data = await get_trending_movies()
-    console.log(data);
-
-    trending_el.innerHTML = data.slice(0, 10).map(e => {
-        return `
-            <div class="card" data-id="${e.id}">
-                <div class="img">
-                    <img src="${image_path + e.poster_path}">
-                </div>
-                <div class="info">
-                    <h2>${e.title}</h2>
-                    <div class="single-info">
-                        <span>Rate: </span>
-                        <span>${e.vote_average} / 10</span>
-                    </div>
-                    <div class="single-info">
-                        <span>Release Date: </span>
-                        <span>${e.release_dates}</span>
-                    </div>
-                </div>
-            </div>
-        `
-    }).join('')
-
-    const cards = document.querySelectorAll('.card')
-    add_click_effect_to_card(cards)
-}
-
-
-// Local Storage
-function get_LS () {
-    const movie_ids = JSON.parse(localStorage.getItem('movie-id'))
-    return movie_ids === null ? [] : movie_ids
-}
-function add_to_LS (id) {
-    const movie_ids = get_LS()
-    localStorage.setItem('movie-id', JSON.stringify([...movie_ids, id]))
-}
-function remove_LS (id) {
-    const movie_ids = get_LS()
-    localStorage.setItem('movie-id', JSON.stringify(movie_ids.filter(e => e !== id)))
-}
-
-// Favorite Movies
-const main_grid = document.querySelector('.favorites .movies-grid')
-
-fetch_favorite_movies()
-async function fetch_favorite_movies () {
-    main_grid.innerHTML = ''
-
-    const movies_LS = await get_LS()
-    const movies = []
-    for(let i = 0; i <= movies_LS.length - 1; i++) {
-        const movie_id = movies_LS[i]
-        let movie = await get_movie_by_id(movie_id)
-        add_favorites_to_dom_from_LS(movie)
-        movies.push(movie)
-    }
-}
-
-function add_favorites_to_dom_from_LS (movie_data) {
-    main_grid.innerHTML += `
-        <div class="card" data-id="${movie_data.id}">
-            <div class="img">
-                <img src="${image_path + movie_data.poster_path}">
-            </div>
-            <div class="info">
-                <h2>${movie_data.title}</h2>
-                <div class="single-info">
-                    <span>Rate: </span>
-                    <span>${movie_data.vote_average} / 10</span>
-                </div>
-                <div class="single-info">
-                    <span>Release Date: </span>
-                    <span>${movie_data.release_date}</span>
-                </div>
-            </div>
-        </div>
-    `
-
-    const cards = document.querySelectorAll('.card')
-    add_click_effect_to_card(cards)
-}
-
-// Fungsi Local Storage Watchlist
-function get_watchlist_LS() {
-    const watchlist_ids = JSON.parse(localStorage.getItem('watchlist-movie-id'));
-    return watchlist_ids === null ? [] : watchlist_ids;
-}
-
-function add_to_watchlist_LS(id) {
-    const watchlist_ids = get_watchlist_LS();
-    localStorage.setItem('watchlist-movie-id', JSON.stringify([...watchlist_ids, id]));
-}
-
-function remove_from_watchlist_LS(id) {
-    const watchlist_ids = get_watchlist_LS();
-    localStorage.setItem('watchlist-movie-id', JSON.stringify(watchlist_ids.filter(e => e !== id)));
-}
-
-// Watchlist movies
-
-fetch_watchlist_movies();
-
-async function fetch_watchlist_movies() {
-    
-    const watchlist_grid = document.querySelector('.watchlist .movies-grid');
-    watchlist_grid.innerHTML = '';
-
-    const watchlist_ids = get_watchlist_LS();
-    const watchlist_movies = [];
-
-    for (let i = 0; i <= watchlist_ids.length -1; i++) {
-        const movie_id = watchlist_ids[i];
-        const movie = await get_movie_by_id(movie_id);
-        add_watchlist_to_dom_from_LS(movie, watchlist_grid);
-        watchlist_movies.push(movie);
-    }
-}
-
-function add_watchlist_to_dom_from_LS(movie_data, watchlist_grid) {
-    
-    watchlist_grid.innerHTML += `
-        <div class="card" data-id="${movie_data.id}">
-            <div class="img">
-                <img src="${image_path + movie_data.poster_path}">
-            </div>
-            <div class="info">
-                <h2>${movie_data.title}</h2>
-                <div class="single-info">
-                    <span>Rate: </span>
-                    <span>${movie_data.vote_average} / 10</span>
-                </div>
-                <div class="single-info">
-                    <span>Release Date: </span>
-                    <span>${movie_data.release_date}</span>
-                </div>
-            </div>
-        </div>
-    `;
-
-    const cards = watchlist_grid.querySelectorAll('.card');
-    add_click_effect_to_card(cards);
 }
 
 // POPUP
