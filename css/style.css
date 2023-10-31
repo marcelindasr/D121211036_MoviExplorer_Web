@@ -1,0 +1,405 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+@import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #FFFFFF;
+}
+
+.logo {
+    padding: 10px 10px 10px 20px ;
+}
+
+header {
+    background-color: #030426;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header a {
+    text-decoration: none; /* Menghilangkan garis bawah */
+    color: inherit; /* Mewarisi warna teks dari elemen yang mengelilinginya */
+}
+
+
+.search {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; 
+}
+
+.search input {
+    width: 500px;
+    padding: 5px 10px;
+    border-radius: 30px;
+    border: none;
+    margin-right: 5px;
+    margin-left: 20px;
+}
+
+.search button {
+    background-color: #1b6fed;
+    color: #FFFFFF;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.search button:hover {
+    background-color: #1353b3;
+}
+
+.banner1 {
+    width: 100%;
+    position: relative;
+}
+
+.carousel {
+    height: 550px;
+    position: relative;
+    overflow: hidden;
+}
+
+.slider{
+    height: 100%;
+    display: flex;
+    width: 400%;
+    transition: all 0.3s;
+}
+
+.slider section {
+    flex-basis : 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.controls .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.controls .arrow i{
+    font-size: 60px;
+    color:#4F93F8;
+}
+
+.arrow.left {
+    left:0;
+}
+
+.arrow.right{
+    right:0;
+}
+
+.banner {
+    width: 1263px; /* Maksimum lebar banner */
+    position: relative;
+    margin: 0 ; /* Untuk membuat banner berada di tengah layar */
+}
+
+.banner-img {
+    position: relative;
+    width: 100%; /* Gambar mengisi lebar layar */
+    height: 600px;
+    overflow: hidden;
+}
+
+
+.banner-img img {
+    width: 100%; /* Gambar mengisi lebar layar */
+    height: 100%; /* Untuk menjaga aspek rasio gambar */
+    object-fit: cover; /* Untuk memastikan gambar mengisi ruang tanpa distorsi */
+}
+
+.info-banner {
+    bottom: 0;
+}
+
+.info-banner .text{
+    position: absolute;
+    bottom: 20px; /* Meletakkan info-banner di bagian bawah banner-img */
+    left: 0; /* Bisa disesuaikan sesuai kebutuhan */
+    background: #000000b3; /* Contoh latar belakang transparan */
+    color: #fff; /* Contoh warna teks */
+    padding: 40px; /* Spasi dalam info-banner */
+    width: 100%; /* Lebar info-banner sesuai dengan banner-img */
+}
+
+.info-banner img {
+    position: absolute;
+    bottom: 20px; /* Meletakkan info-banner di bagian bawah banner-img */
+    right: 0;
+    padding: 40px; 
+    justify-content: center;
+    align-items: center;/* Spasi dalam info-banner */
+}
+
+.controls ul {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.controls ul li {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #4F93F8;
+    border-radius: 50px;
+    margin: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.controls ul li.selected {
+    background: #4F93F8;
+}
+
+.card {
+    width: clamp(100px, 80vw, 200px); /* Adjust the width as needed */
+    height: 320px; /* Adjust the height as needed */
+    box-shadow: 0 0 .5rem #030426;
+    outline: 2px solid #4F93F8;
+    overflow: hidden;
+    color: #000000;
+    cursor: pointer;
+    border-radius: .5rem;
+}
+
+.img {
+    width: 100%;
+    height: 150px; /* Adjust the image height as needed */
+    overflow: hidden;
+    position: relative;
+    transition: 200ms ease-in-out transform;
+}
+
+.img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 20%;
+    background-image: linear-gradient(to top, #FFFFFF, transparent);
+}
+
+.info {
+    padding: 2rem 1rem 1rem;
+}
+
+.info h2 {
+    margin-bottom: 0.5rem;
+    font-size: 16px;
+}
+
+.single-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .8rem;
+    margin: .2rem 0;
+}
+
+.card:hover .img {
+    transform: scale(1.1);
+}
+  
+
+.movies-grid {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.movies-container {
+    padding: 1rem;
+    text-align: center;
+    color: #000000;
+}
+  
+.popup-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    /* background-image: linear-gradient(rgba(0, 0, 0, .9), rgba(0, 0, 0, 1)), url(https://unsplash.it/1600/900); */
+    background-size: cover;
+    background-position: center;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    padding: 3rem;
+    overflow-y: scroll;
+    transform: scale(0);
+    transition: 200ms ease-in-out transform;
+}
+.content {
+    display: flex;
+    align-items: flex-start;
+    gap: 3rem;
+    width: 1200px;
+    margin-top: 10rem;
+}
+.content .left .single-info {
+    font-size: 1rem;
+    
+    padding: .5rem 0;
+}
+.content .left .single-info .heart-icon {
+    font-size: 2rem;
+    user-select: none;
+    cursor: pointer;
+    padding-right: 15px;
+}
+
+.content .left .single-info .watchlist-icon {
+    font-size: 2rem;
+    user-select: none;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+}
+
+.content .left .single-info .heart-icon:hover { transform: scale(1.1); }
+.content .left .single-info .heart-icon:active { transform: scale(.9); }
+
+.content .left .single-info .watchlist-icon:hover { transform: scale(1.1); }
+.content .left .single-info .wa-icon:active { transform: scale(.9); }
+
+.poster-img {
+    width: 300px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: .5rem;
+    box-shadow: 0 0 .5rem #4F93F8;
+    border: 2px solid #4F93F8;
+}
+.poster-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.single-info-container { width: 200px; }
+.right > *:not(h1) { margin: 1rem 0; }
+.trailer iframe {
+    border: 2px solid #4F93F8;
+    box-shadow: 0 0 .5rem #4F93F8;
+    border-radius: .5rem;
+    max-width: 400px;
+    width: 100%;
+    height: 200px;
+}
+.x-icon {
+    font-size: 2rem;
+    position: absolute;
+    top: 100px;
+    right: 100px;
+    cursor: pointer;
+    user-select: none;
+}
+.x-icon:hover { transform: scale(1.3); }
+.x-icon:active { transform: scale(1); }
+
+.show-popup { transform: scale(1); }
+
+.change-color { color: #4F93F8; }
+
+@media only screen and (max-width: 800px) {
+    .popup-container * { padding: 0; }
+    .popup-container { padding: 2rem; }
+    .content {
+        flex-direction: column;
+        margin-top: 50rem;
+    }
+    .x-icon {
+        top: 10px;
+        right: 20px;
+    }
+}
+
+footer {
+    margin-top: 20px;
+    background-color: #030426;
+    text-align: center;
+    color:#FFFFFF;
+}
+
+.sosmed {
+    display: flex;
+    justify-content: center;
+}
+
+.sosmed .bg {
+    display: flex;
+    justify-content: center; /* Center the content horizontally within the .bg div */
+    align-items: center; /* Center the content vertically within the .bg div */
+    width: 60px;
+    height: 60px;
+    background-color: #FFFFFF;
+    border-radius: 60px;
+    border: 3px solid #4F93F8;
+    margin-right: 10px;
+}
+
+.sosmed .bg .fb{
+    width: 65%;
+    height: 65%;
+}
+
+.sosmed .bg .twt{
+    width: 65%;
+    height: 65%;
+}
+
+.sosmed .bg .ig{
+    width: 80%;
+    height: 80%;
+}
+
+
+footer .logofooter {
+    padding-top: 30px;
+}
+
+.copyright{
+    padding-top: 40px;
+    padding-bottom: 5px;
+}
+
+.sosmed .bg:hover {
+    background-color: #cecece;
+}
+
+.search-results {
+    display: none;
+}
+
