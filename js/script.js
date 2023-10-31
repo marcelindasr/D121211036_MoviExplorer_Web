@@ -1,14 +1,16 @@
 const API_KEY = `f6707fe48c0e27df16600fa9efd12133`
 const image_path = `https://image.tmdb.org/t/p/w1280/`
 
+// BANNER
+
 const slider = document.querySelector('.slider');
 const leftArrow = document.querySelector('.left');
 const rightArrow = document.querySelector('.right');
 const indicatorParents = document.querySelector('.controls ul');
-const totalSlides = 4; // Update this to match the number of slides
+const totalSlides = 4;
 
 var sectionIndex = 0;
-var autoSlideInterval; // Store the interval ID
+var autoSlideInterval; 
 
 function setIndex() {
     document.querySelector('.controls .selected').classList.remove('selected');
@@ -16,18 +18,15 @@ function setIndex() {
     indicatorParents.children[sectionIndex].classList.add('selected');
 }
 
-// Function to move to the next slide
 function nextSlide() {
     sectionIndex = (sectionIndex < totalSlides - 1) ? sectionIndex + 1 : 0;
     setIndex();
 }
 
-// Start the auto-slider
 function startAutoSlider() {
-    autoSlideInterval = setInterval(nextSlide, 3000); // Change the interval duration as needed (e.g., 3000ms = 3 seconds)
+    autoSlideInterval = setInterval(nextSlide, 3000); 
 }
 
-// Stop the auto-slider
 function stopAutoSlider() {
     clearInterval(autoSlideInterval);
 }
@@ -38,23 +37,22 @@ document.querySelectorAll('.controls li').forEach(function(indicator, ind) {
     indicator.addEventListener('click', function() {
         sectionIndex = ind;
         setIndex();
-        stopAutoSlider(); // Stop auto-slider when user interacts with indicators
+        stopAutoSlider();
     });
 });
 
 leftArrow.addEventListener('click', function() {
     sectionIndex = (sectionIndex > 0) ? sectionIndex - 1 : totalSlides - 1;
     setIndex();
-    stopAutoSlider(); // Stop auto-slider when user clicks the left arrow
+    stopAutoSlider(); 
 });
 
 rightArrow.addEventListener('click', function() {
     sectionIndex = (sectionIndex < totalSlides - 1) ? sectionIndex + 1 : 0;
     setIndex();
-    stopAutoSlider(); // Stop auto-slider when user clicks the right arrow
+    stopAutoSlider(); 
 });
 
-// Start the auto-slider when the page loads
 startAutoSlider();
 
 
@@ -233,14 +231,14 @@ function remove_from_watchlist_LS(id) {
 fetch_watchlist_movies();
 
 async function fetch_watchlist_movies() {
-    // Gantilah dengan elemen DOM yang sesuai dengan watchlist Anda
+    
     const watchlist_grid = document.querySelector('.watchlist .movies-grid');
     watchlist_grid.innerHTML = '';
 
     const watchlist_ids = get_watchlist_LS();
     const watchlist_movies = [];
 
-    for (let i = 3; i <= watchlist_ids.length -1; i++) {
+    for (let i = 0; i <= watchlist_ids.length -1; i++) {
         const movie_id = watchlist_ids[i];
         const movie = await get_movie_by_id(movie_id);
         add_watchlist_to_dom_from_LS(movie, watchlist_grid);
@@ -249,7 +247,7 @@ async function fetch_watchlist_movies() {
 }
 
 function add_watchlist_to_dom_from_LS(movie_data, watchlist_grid) {
-    // Gantilah dengan elemen DOM yang sesuai dengan tampilan watchlist Anda
+    
     watchlist_grid.innerHTML += `
         <div class="card" data-id="${movie_data.id}">
             <div class="img">
@@ -272,9 +270,6 @@ function add_watchlist_to_dom_from_LS(movie_data, watchlist_grid) {
     const cards = watchlist_grid.querySelectorAll('.card');
     add_click_effect_to_card(cards);
 }
-
-
-
 
 // POPUP
 
@@ -393,22 +388,22 @@ async function show_popup (card) {
 
     })
 
-    const watchlist_icon = popup_container.querySelector('.watchlist-icon'); // Ganti nama variabel sesuai dengan yang sesuai dengan elemen HTML Anda
+    const watchlist_icon = popup_container.querySelector('.watchlist-icon'); 
 
-    const watchlist_ids = get_watchlist_LS(); // Ganti nama fungsi sesuai dengan yang sesuai dengan Local Storage watchlist Anda
+    const watchlist_ids = get_watchlist_LS(); 
     for (let i = 0; i <= watchlist_ids.length; i++) {
         if (watchlist_ids[i] === movie_id) watchlist_icon.classList.add('change-color');
     }
 
     watchlist_icon.addEventListener('click', () => {
         if (watchlist_icon.classList.contains('change-color')) {
-            remove_from_watchlist_LS(movie_id); // Ganti nama fungsi sesuai dengan yang sesuai dengan Local Storage watchlist Anda
+            remove_from_watchlist_LS(movie_id); 
             watchlist_icon.classList.remove('change-color');
         } else {
-            add_to_watchlist_LS(movie_id); // Ganti nama fungsi sesuai dengan yang sesuai dengan Local Storage watchlist Anda
+            add_to_watchlist_LS(movie_id); 
             watchlist_icon.classList.add('change-color');
         }
-        fetch_watchlist_movies(); // Panggil fungsi untuk menampilkan daftar watchlist
+        fetch_watchlist_movies(); 
     });
 
 }
