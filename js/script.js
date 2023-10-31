@@ -1,115 +1,160 @@
 const API_KEY = `f6707fe48c0e27df16600fa9efd12133`
 const image_path = `https://image.tmdb.org/t/p/w1280/`
 
-// BANNER
-
-const slider = document.querySelector('.slider');
-const leftArrow = document.querySelector('.left');
-const rightArrow = document.querySelector('.right');
-const indicatorParents = document.querySelector('.controls ul');
-const totalSlides = 4;
-
-var sectionIndex = 0;
-var autoSlideInterval; 
-
-function setIndex() {
-    document.querySelector('.controls .selected').classList.remove('selected');
-    slider.style.transform = 'translate(' + (sectionIndex * -25) + '%)';
-    indicatorParents.children[sectionIndex].classList.add('selected');
-}
-
-function nextSlide() {
-    sectionIndex = (sectionIndex < totalSlides - 1) ? sectionIndex + 1 : 0;
-    setIndex();
-}
-
-function startAutoSlider() {
-    autoSlideInterval = setInterval(nextSlide, 3000); 
-}
-
-function stopAutoSlider() {
-    clearInterval(autoSlideInterval);
-}
-
-document.querySelector('.controls li').classList.add('selected');
-
-document.querySelectorAll('.controls li').forEach(function(indicator, ind) {
-    indicator.addEventListener('click', function() {
-        sectionIndex = ind;
-        setIndex();
-        stopAutoSlider();
-    });
-});
-
-leftArrow.addEventListener('click', function() {
-    sectionIndex = (sectionIndex > 0) ? sectionIndex - 1 : totalSlides - 1;
-    setIndex();
-    stopAutoSlider(); 
-});
-
-rightArrow.addEventListener('click', function() {
-    sectionIndex = (sectionIndex < totalSlides - 1) ? sectionIndex + 1 : 0;
-    setIndex();
-    stopAutoSlider(); 
-});
-
-startAutoSlider();
-
-
 // SEARCH
 const searchButton = document.querySelector('.search button');
 const searchInput = document.querySelector('.search input');
 const searchResults = document.querySelector('.search-results');
-const banners = document.querySelectorAll('.banner1, .trending, .favorites, .watchlist');
+const customCurrentPage = 1;
+const customLoadMoreButton = document.getElementById('load-more-search');
+const banners1 = document.querySelectorAll('.banner1, .trending, .favorites, .watchlist, .explore');
+let customPage = customCurrentPage;
+let currentSearchTerm = "";
 
 searchButton.addEventListener('click', async () => {
     const searchTerm = searchInput.value;
     if (searchTerm) {
-    
-        banners.forEach(banner => banner.style.display = 'none');
-
+        currentSearchTerm = searchTerm;
+        banners1.forEach(banner => banner.style.display = 'none');
         searchResults.style.display = 'block';
-
-        const searchResultsData = await searchMovies(searchTerm);
+        customPage = customCurrentPage;
+        customLoadMoreButton.disabled = false;
+        customLoadMoreButton.textContent = "Load More";
+        const searchResultsData = await searchMovies(currentSearchTerm, customPage);
         displaySearchResults(searchResultsData);
     }
 });
 
-async function searchMovies(searchTerm) {
-    const resp = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchTerm}`)
-    const respData = await resp.json()
-    return respData.results
+customLoadMoreButton.addEventListener('click', async () => {
+    customPage++;
+    const searchResultsData = await searchMovies(currentSearchTerm, customPage);
+    displaySearchResults(searchResultsData, true);
+});
+
+async function searchMovies(searchTerm, page) {
+    try {
+        const resp = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchTerm}&page=${page}`);
+        const respData = await resp.json();
+        return respData.results;
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        return [];
+    }
 }
 
-function displaySearchResults(results) {
+function displaySearchResults(results, append = false) {
     const searchResultsGrid = searchResults.querySelector('.movies-grid');
-    const searchResultsTitle = searchResults.querySelector('h1');
 
+    if (!append) {
+        searchResultsGrid.innerHTML = '';
+    }
 
-    searchResultsGrid.innerHTML = results.map(movie => {
-        return `
-            <div class="card" data-id="${movie.id}">
-                <div class="img">
-                    <img src="${image_path + movie.poster_path}" alt="${movie.title}">
+    results.forEach(movie => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.id = movie.id;
+        card.innerHTML = `
+            <div class="img">
+                <img src="${image_path + movie.poster_path}" alt="${movie.title}">
+            </div>
+            <div class="info">
+                <h2>${movie.title}</h2>
+                <div class="single-info">
+                    <span>Rate: </span>
+                    <span>${movie.vote_average} / 10</span>
                 </div>
-                <div class="info">
-                    <h2>${movie.title}</h2>
-                    <div class="single-info">
-                        <span>Rate: </span>
-                        <span>${movie.vote_average} / 10</span>
-                    </div>
-                    <div class="single-info">
-                        <span>Release Date: </span>
-                        <span>${movie.release_date}</span>
-                    </div>
+                <div class="single-info">
+                    <span>Release Date: </span>
+                    <span>${movie.release_date}</span>
                 </div>
             </div>
         `;
-    }).join('');
+        searchResultsGrid.appendChild(card);
+    });
+
+    if (results.length === 0) {
+        customLoadMoreButton.disabled = true;
+        customLoadMoreButton.textContent = "No more results";
+    }
 
     const cards = document.querySelectorAll('.card')
     add_click_effect_to_card(cards)
 }
+
+
+// Explore Movies
+const banners2 = document.querySelectorAll('.banner1, .trending, .favorites, .watchlist, .search-results');
+const exploreButton = document.querySelector('.explore-movie span');
+const explore_el = document.querySelector('.explore');
+const loadMoreButton = document.getElementById('load-more-button');
+
+let currentPage = 1;
+
+// Initial loading of movies
+loadMovies();
+
+exploreButton.addEventListener('click', () => {
+    // Sembunyikan semua container kecuali Explore Movies
+    banners2.forEach(banner => banner.style.display = 'none');
+    explore_el.style.display = 'block';
+
+    // Load film jika belum diload sebelumnya
+    if (explore_el.querySelector('.movies-grid').childElementCount === 0) {
+        loadMovies();
+    }
+});
+
+loadMoreButton.addEventListener('click', () => {
+    currentPage++;
+    loadMovies();
+});
+
+async function loadMovies() {
+    try {
+        const resp = await fetch(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}&page=${currentPage}`);
+        const respData = await resp.json();
+        const movies = respData.results;
+
+        if (movies.length === 0) {
+            loadMoreButton.disabled = true;
+            loadMoreButton.textContent = "No more movies";
+        }
+
+        add_to_dom_explore(movies);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+    }
+}
+
+function add_to_dom_explore(data) {
+    const exploreMoviesGrid = explore_el.querySelector('.movies-grid');
+
+    const html = data.map(e => `
+        <div class="card" data-id="${e.id}">
+            <div class="img">
+                <img src="${image_path + e.poster_path}">
+            </div>
+            <div class="info">
+                <h2>${e.title}</h2>
+                <div class="single-info">
+                    <span>Rate: </span>
+                    <span>${e.vote_average} / 10</span>
+                </div>
+                <div class="single-info">
+                    <span>Release Date: </span>
+                    <span>${e.release_date}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+
+    exploreMoviesGrid.innerHTML += html;
+
+    const cards = explore_el.querySelectorAll('.card');
+    add_click_effect_to_card(cards);
+}
+
+
 
 const trending_el = document.querySelector('.trending .movies-grid')
 
@@ -405,3 +450,21 @@ async function show_popup (card) {
     });
 
 }
+
+const scrollUpButton = document.getElementById('scroll-up-button');
+
+scrollUpButton.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+const scrollUpButton2 = document.getElementById('scroll-up-button2');
+
+scrollUpButton2.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});

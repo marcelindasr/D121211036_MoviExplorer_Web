@@ -29,18 +29,45 @@ header a {
     color: inherit; /* Mewarisi warna teks dari elemen yang mengelilinginya */
 }
 
+/* CSS */
+.banner1 {
+    position: relative;
+    width: 100%;
+}
+
+.banner-img {
+    position: relative;
+}
+
+.banner-img img {
+    width: 100%;
+    height: auto;
+}
+
+.welcome-text {
+    position: absolute;
+    top: 50%; /* Setengah dari tinggi gambar */
+    left: 50%; /* Setengah dari lebar gambar */
+    transform: translate(-50%, -50%); /* Menggeser teks ke tengah */
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 20px;
+}
+
+
 .explore-movie {
     color: #4F93F8;
     scale: 1.4;
     padding: 5px 10px;
     align-items: center;
-    
+    cursor: pointer;
 }
 
 .explore-movie span:hover{
-    color: #1b6fed;
+    color: #1353b3;
+    
 }
-
 
 .search {
     display: flex;
@@ -68,119 +95,6 @@ header a {
 
 .search button:hover {
     background-color: #1353b3;
-}
-
-.banner1 {
-    width: 100%;
-    position: relative;
-}
-
-.carousel {
-    height: 550px;
-    position: relative;
-    overflow: hidden;
-}
-
-.slider{
-    height: 100%;
-    display: flex;
-    width: 400%;
-    transition: all 0.3s;
-}
-
-.slider section {
-    flex-basis : 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.controls .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
-
-.controls .arrow i{
-    font-size: 60px;
-    color:#4F93F8;
-}
-
-.arrow.left {
-    left:0;
-}
-
-.arrow.right{
-    right:0;
-}
-
-.banner {
-    width: 1263px; /* Maksimum lebar banner */
-    position: relative;
-    margin: 0 ; /* Untuk membuat banner berada di tengah layar */
-}
-
-.banner-img {
-    position: relative;
-    width: 100%; /* Gambar mengisi lebar layar */
-    height: 600px;
-    overflow: hidden;
-}
-
-.banner-img img {
-    width: 100%; /* Gambar mengisi lebar layar */
-    height: 100%; /* Untuk menjaga aspek rasio gambar */
-    object-fit: cover; /* Untuk memastikan gambar mengisi ruang tanpa distorsi */
-}
-
-.info-banner {
-    bottom: 0;
-}
-
-.info-banner .text{
-    position: absolute;
-    bottom: 20px; /* Meletakkan info-banner di bagian bawah banner-img */
-    left: 0; /* Bisa disesuaikan sesuai kebutuhan */
-    background: #000000b3; /* Contoh latar belakang transparan */
-    color: #fff; /* Contoh warna teks */
-    padding: 40px; /* Spasi dalam info-banner */
-    width: 100%; /* Lebar info-banner sesuai dengan banner-img */
-}
-
-.info-banner img {
-    position: absolute;
-    bottom: 20px; /* Meletakkan info-banner di bagian bawah banner-img */
-    right: 0;
-    padding: 40px; 
-    justify-content: center;
-    align-items: center;/* Spasi dalam info-banner */
-}
-
-.controls ul {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translate(-50%);
-    list-style: none;
-    display: flex;
-    padding: 0;
-    margin: 0;
-}
-
-.controls ul li {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: 2px solid #4F93F8;
-    border-radius: 50px;
-    margin: 10px;
-    background: transparent;
-    cursor: pointer;
-}
-
-.controls ul li.selected {
-    background: #4F93F8;
 }
 
 .card {
@@ -413,3 +327,32 @@ footer .logofooter {
     display: none;
 }
 
+.search-results button{
+    background-color: #1b6fed;
+    color: #FFFFFF;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.explore {
+    display: none;
+}
+
+.explore button{
+    background-color: #1b6fed;
+    color: #FFFFFF;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.explore button:hover {
+    background-color: #1353b3;
+}
+
+.search-results button:hover {
+    background-color: #1353b3;
+}
