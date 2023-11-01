@@ -546,7 +546,15 @@ async function show_popup(card) {
     `;
 
     const x_icon = document.querySelector('.x-icon');
-    x_icon.addEventListener('click', () => popup_container.classList.remove('show-popup'));
+    x_icon.addEventListener('click', () => {
+        const trailerIframe = popup_container.querySelector('.trailer iframe');
+    
+        if (trailerIframe) {
+            trailerIframe.src = '';
+        }
+        
+        popup_container.classList.remove('show-popup');
+    });
 
     const heart_icon = popup_container.querySelector('.heart-icon');
 
