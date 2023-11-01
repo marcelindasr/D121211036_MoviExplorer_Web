@@ -49,7 +49,7 @@
                 <div class="banner-img">
                     <img src="./assets/movies.jpg" alt="banner">
                     <div class="welcome-text">
-                        <h1><strong>Welcome to MoviExplorer</strong></h1>
+                        <h1><strong>Welcome to MoviExplorer!</strong></h1>
                         <p>We help you find the movies you've been searching for.</p>
                     </div>
                 </div>
@@ -184,10 +184,15 @@
                     <h2>Overview</h2>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere necessitatibus, quos molestiae fuga voluptatem totam odit voluptates ullam et distinctio?</p>
                 </div>
+                
                 <div class="trailer">
                     <h2>Trailer</h2>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Kmo8NLKkfcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    ${movie_trailer
+                        ? `<iframe width="560" height="315" src="https://www.youtube.com/embed/${movie_trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+                        : `<iframe width="560" height="315" src="https://www.youtube.com/embed/DEFAULT_TRAILER_KEY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` // Menampilkan iframe dengan video default jika trailer tidak tersedia
+                    }
                 </div>
+
             </div>
         </div> -->
     </div>

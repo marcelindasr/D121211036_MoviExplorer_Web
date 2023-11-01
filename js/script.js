@@ -449,20 +449,38 @@ async function get_movie_by_id (id) {
     const respData = await resp.json()
     return respData
 }
-async function get_movie_trailer (id) {
-    const resp = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`)
-    const respData = await resp.json()
-    return respData.results[0].key
+async function get_movie_trailer(id) {
+    try {
+        const resp = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`);
+        const respData = await resp.json();
+
+        if (respData.results.length > 0) {
+            return respData.results[0].key;
+        } else {
+            return null; 
+        }
+    } catch (error) {
+        console.error('Error fetching trailer:', error);
+        return null;
+    }
 }
 
-async function show_popup (card) {
-    popup_container.classList.add('show-popup')
 
-    const movie_id = card.getAttribute('data-id')
-    const movie = await get_movie_by_id(movie_id)
-    const movie_trailer = await get_movie_trailer(movie_id)
+async function show_popup(card) {
+    popup_container.classList.add('show-popup');
 
-    popup_container.style.background = `linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, 1)), url(${image_path + movie.poster_path})`
+    const movie_id = card.getAttribute('data-id');
+    const movie = await get_movie_by_id(movie_id);
+    const movie_trailer = await get_movie_trailer(movie_id);
+
+    popup_container.style.background = `linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, 1)), url(${image_path + movie.poster_path})`;
+
+    const trailerSection = movie_trailer
+        ? `<div class="trailer">
+                <h2>Trailer</h2>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/${movie_trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+           </div>`
+        : '';
 
     popup_container.innerHTML = `
     <span class="x-icon">&#10006;</span>
@@ -522,54 +540,51 @@ async function show_popup (card) {
                 <h2>Overview</h2>
                 <p>${movie.overview}</p>
             </div>
-            <div class="trailer">
-                <h2>Trailer</h2>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/${movie_trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
+            ${trailerSection}
         </div>
     </div>
-    `
-    const x_icon = document.querySelector('.x-icon')
-    x_icon.addEventListener('click', () => popup_container.classList.remove('show-popup'))
+    `;
 
-    const heart_icon = popup_container.querySelector('.heart-icon')
+    const x_icon = document.querySelector('.x-icon');
+    x_icon.addEventListener('click', () => popup_container.classList.remove('show-popup'));
 
-    const movie_ids = get_LS()
-    for(let i = 0; i <= movie_ids.length; i++) {
-        if (movie_ids[i] == movie_id) heart_icon.classList.add('change-color')
+    const heart_icon = popup_container.querySelector('.heart-icon');
+
+    const movie_ids = get_LS();
+    for (let i = 0; i <= movie_ids.length; i++) {
+        if (movie_ids[i] == movie_id) heart_icon.classList.add('change-color');
     }
 
     heart_icon.addEventListener('click', () => {
-        if(heart_icon.classList.contains('change-color')) {
-            remove_LS(movie_id)
-            heart_icon.classList.remove('change-color')
+        if (heart_icon.classList.contains('change-color')) {
+            remove_LS(movie_id);
+            heart_icon.classList.remove('change-color');
         } else {
-            add_to_LS(movie_id)
-            heart_icon.classList.add('change-color')
+            add_to_LS(movie_id);
+            heart_icon.classList.add('change-color');
         }
-        fetch_favorite_movies()
+        fetch_favorite_movies();
+    });
 
-    })
+    const watchlist_icon = popup_container.querySelector('.watchlist-icon');
 
-    const watchlist_icon = popup_container.querySelector('.watchlist-icon'); 
-
-    const watchlist_ids = get_watchlist_LS(); 
+    const watchlist_ids = get_watchlist_LS();
     for (let i = 0; i <= watchlist_ids.length; i++) {
         if (watchlist_ids[i] === movie_id) watchlist_icon.classList.add('change-color');
     }
 
     watchlist_icon.addEventListener('click', () => {
         if (watchlist_icon.classList.contains('change-color')) {
-            remove_from_watchlist_LS(movie_id); 
+            remove_from_watchlist_LS(movie_id);
             watchlist_icon.classList.remove('change-color');
         } else {
-            add_to_watchlist_LS(movie_id); 
+            add_to_watchlist_LS(movie_id);
             watchlist_icon.classList.add('change-color');
         }
-        fetch_watchlist_movies(); 
+        fetch_watchlist_movies();
     });
-
 }
+
 
 const scrollUpButton = document.getElementById('scroll-up-button');
 
