@@ -87,157 +87,126 @@ function displaySearchResults(results, append = false) {
 const tagsEl = document.getElementById('tags');
 
 const genres = [
-    {
-      "id": 28,
-      "name": "Action"
-    },
-    {
-      "id": 12,
-      "name": "Adventure"
-    },
-    {
-      "id": 16,
-      "name": "Animation"
-    },
-    {
-      "id": 35,
-      "name": "Comedy"
-    },
-    {
-      "id": 80,
-      "name": "Crime"
-    },
-    {
-      "id": 99,
-      "name": "Documentary"
-    },
-    {
-      "id": 18,
-      "name": "Drama"
-    },
-    {
-      "id": 10751,
-      "name": "Family"
-    },
-    {
-      "id": 14,
-      "name": "Fantasy"
-    },
-    {
-      "id": 36,
-      "name": "History"
-    },
-    {
-      "id": 27,
-      "name": "Horror"
-    },
-    {
-      "id": 10402,
-      "name": "Music"
-    },
-    {
-      "id": 9648,
-      "name": "Mystery"
-    },
-    {
-      "id": 10749,
-      "name": "Romance"
-    },
-    {
-      "id": 878,
-      "name": "Science Fiction"
-    },
-    {
-      "id": 10770,
-      "name": "TV Movie"
-    },
-    {
-      "id": 53,
-      "name": "Thriller"
-    },
-    {
-      "id": 10752,
-      "name": "War"
-    },
-    {
-      "id": 37,
-      "name": "Western"
-    }
-  ]
+  {
+    "id": 28,
+    "name": "Action"
+  },
+  {
+    "id": 12,
+    "name": "Adventure"
+  },
+  {
+    "id": 16,
+    "name": "Animation"
+  },
+  {
+    "id": 35,
+    "name": "Comedy"
+  },
+  {
+    "id": 80,
+    "name": "Crime"
+  },
+  {
+    "id": 99,
+    "name": "Documentary"
+  },
+  {
+    "id": 18,
+    "name": "Drama"
+  },
+  {
+    "id": 10751,
+    "name": "Family"
+  },
+  {
+    "id": 14,
+    "name": "Fantasy"
+  },
+  {
+    "id": 36,
+    "name": "History"
+  },
+  {
+    "id": 27,
+    "name": "Horror"
+  },
+  {
+    "id": 10402,
+    "name": "Music"
+  },
+  {
+    "id": 9648,
+    "name": "Mystery"
+  },
+  {
+    "id": 10749,
+    "name": "Romance"
+  },
+  {
+    "id": 878,
+    "name": "Science Fiction"
+  },
+  {
+    "id": 10770,
+    "name": "TV Movie"
+  },
+  {
+    "id": 53,
+    "name": "Thriller"
+  },
+  {
+    "id": 10752,
+    "name": "War"
+  },
+  {
+    "id": 37,
+    "name": "Western"
+  }
+];
 
-
-var selectedGenre = []
+let selectedGenre = [];
 setGenre();
+
 function setGenre() {
-    tagsEl.innerHTML= '';
-    genres.forEach(genre => {
-        const t = document.createElement('div');
-        t.classList.add('tag');
-        t.id=genre.id;
-        t.innerText = genre.name;
-        t.addEventListener('click', () => {
-            if(selectedGenre.length == 0){
-                selectedGenre.push(genre.id);
-            }else{
-                if(selectedGenre.includes(genre.id)){
-                    selectedGenre.forEach((id, idx) => {
-                        if(id == genre.id){
-                            selectedGenre.splice(idx, 1);
-                        }
-                    })
-                }else{
-                    selectedGenre.push(genre.id);
-                }
-            }
-            console.log(selectedGenre)
-            
-            highlightSelection()
-        })
-        tagsEl.append(t);
-    })
+  tagsEl.innerHTML = '';
+  genres.forEach(genre => {
+    const t = document.createElement('div');
+    t.classList.add('tag');
+    t.id = genre.id;
+    t.innerText = genre.name;
+    t.addEventListener('click', () => {
+      if (selectedGenre.includes(genre.id)) {
+        selectedGenre = selectedGenre.filter(id => id !== genre.id);
+      } else {
+        selectedGenre.push(genre.id);
+      }
+      console.log(selectedGenre);
+
+      highlightSelection();
+
+      clearMoviesGrid();
+      loadMovies();
+    });
+    tagsEl.append(t);
+  });
 }
 
 function highlightSelection() {
-    const tags = document.querySelectorAll('.tag');
-    tags.forEach(tag => {
-        tag.classList.remove('highlight');
-    });
-
-    console.log("highlightSelection called"); // Debugging line
-
-    if (selectedGenre.length !== 0) {
-        selectedGenre.forEach(id => {
-            const highlightedTag = document.getElementById(id);
-            if (highlightedTag) {
-                highlightedTag.classList.add('highlight');
-            }
-        });
-    }
-}
-
-function clearBtn() {
-    let clearBtn = document.getElementById('clear');
-    if (clearBtn) {
-        clearBtn.classList.add('highlight');
+  const tags = document.querySelectorAll('.tag');
+  tags.forEach(tag => {
+    if (selectedGenre.includes(parseInt(tag.id))) {
+      tag.classList.add('highlight');
     } else {
-        console.log("Creating 'Clear' button"); // Debugging line
-
-        let clear = document.createElement('div');
-        clear.classList.add('tag', 'highlight');
-        clear.id = 'clear';
-        clear.innerText = 'Clear x';
-        clear.addEventListener('click', () => {
-            selectedGenre = [];
-            setGenre();
-
-        });
-        tagsEl.append(clear);
+      tag.classList.remove('highlight');
     }
+  });
 }
 
-// Debugging line
-console.log("Script loaded");
-
+function clearMoviesGrid() {
+  const exploreMoviesGrid = explore_el.querySelector('.movies-grid');
+  exploreMoviesGrid.innerHTML = '';
+}
 
 const banners2 = document.querySelectorAll('.banner1, .trending, .favorites, .watchlist, .search-results');
 const exploreButton = document.querySelector('.explore-movie span');
@@ -246,68 +215,65 @@ const loadMoreButton = document.getElementById('load-more-button');
 
 let currentPage = 1;
 
-// Initial loading of movies
 loadMovies();
 
 exploreButton.addEventListener('click', () => {
+  banners2.forEach(banner => banner.style.display = 'none');
+  explore_el.style.display = 'block';
 
-    banners2.forEach(banner => banner.style.display = 'none');
-    explore_el.style.display = 'block';
-
-    if (explore_el.querySelector('.movies-grid').childElementCount === 0) {
-        loadMovies();
-    }
+  clearMoviesGrid();
+  loadMovies();
 });
 
-
 loadMoreButton.addEventListener('click', () => {
-    currentPage++;
-    loadMovies();
+  currentPage++;
+  loadMovies();
 });
 
 async function loadMovies() {
-    try {
-        const resp = await fetch(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}&page=${currentPage}`);
-        const respData = await resp.json();
-        const movies = respData.results;
+  try {
+    const genreQuery = selectedGenre.length === 0 ? '' : `&with_genres=${selectedGenre.join(',')}`;
+    const resp = await fetch(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}&page=${currentPage}${genreQuery}`);
+    const respData = await resp.json();
+    const movies = respData.results;
 
-        if (movies.length === 0) {
-            loadMoreButton.disabled = true;
-            loadMoreButton.textContent = "No more movies";
-        }
-
-        add_to_dom_explore(movies);
-    } catch (error) {
-        console.error('Error fetching movies:', error);
+    if (movies.length === 0) {
+      loadMoreButton.disabled = true;
+      loadMoreButton.textContent = "No more movies";
     }
+
+    add_to_dom_explore(movies);
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+  }
 }
 
 function add_to_dom_explore(data) {
-    const exploreMoviesGrid = explore_el.querySelector('.movies-grid');
+  const exploreMoviesGrid = explore_el.querySelector('.movies-grid');
 
-    const html = data.map(e => `
-        <div class="card" data-id="${e.id}">
-            <div class="img">
-                <img src="${image_path + e.poster_path}">
-            </div>
-            <div class="info">
-                <h2>${e.title}</h2>
-                <div class="single-info">
-                    <span>Rate: </span>
-                    <span>${e.vote_average} / 10</span>
-                </div>
-                <div class="single-info">
-                    <span>Release Date: </span>
-                    <span>${e.release_date}</span>
-                </div>
-            </div>
+  const html = data.map(e => `
+    <div class="card" data-id="${e.id}">
+      <div class="img">
+        <img src="${image_path + e.poster_path}">
+      </div>
+      <div class="info">
+        <h2>${e.title}</h2>
+        <div class="single-info">
+          <span>Rate: </span>
+          <span>${e.vote_average} / 10</span>
         </div>
-    `).join('');
+        <div class="single-info">
+          <span>Release Date: </span>
+          <span>${e.release_date}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
 
-    exploreMoviesGrid.innerHTML += html;
+  exploreMoviesGrid.innerHTML += html;
 
-    const cards = explore_el.querySelectorAll('.card');
-    add_click_effect_to_card(cards);
+  const cards = explore_el.querySelectorAll('.card');
+  add_click_effect_to_card(cards);
 }
 
 const trending_el = document.querySelector('.trending .movies-grid')
@@ -340,7 +306,7 @@ async function add_to_dom_trending () {
                     </div>
                     <div class="single-info">
                         <span>Release Date: </span>
-                        <span>${e.release_dates}</span>
+                        <span>${e.release_date}</span>
                     </div>
                 </div>
             </div>
