@@ -478,7 +478,7 @@ async function show_popup(card) {
     const trailerSection = movie_trailer
         ? `<div class="trailer">
                 <h2>Trailer</h2>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/${movie_trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/${movie_trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
            </div>`
         : '';
 
@@ -509,7 +509,7 @@ async function show_popup(card) {
             <h3>${movie.tagline}</h3>
             <div class="single-info-container">
                 <div class="single-info">
-                    <span>Language:</span>
+                    <span ">Language:</span>
                     <span>${movie.spoken_languages[0].name}</span>
                 </div>
                 <div class="single-info">

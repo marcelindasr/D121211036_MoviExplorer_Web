@@ -191,9 +191,7 @@
                 
                 <div class="trailer">
                     <h2>Trailer</h2>
-                    ${movie_trailer
-                        ? `<iframe width="560" height="315" src="https://www.youtube.com/embed/${movie_trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-                        : `<iframe width="560" height="315" src="https://www.youtube.com/embed/DEFAULT_TRAILER_KEY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` // Menampilkan iframe dengan video default jika trailer tidak tersedia
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/${movie_trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     }
                 </div>
 
