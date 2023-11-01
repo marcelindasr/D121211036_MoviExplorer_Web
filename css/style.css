@@ -25,8 +25,8 @@ header {
 }
 
 header a {
-    text-decoration: none; /* Menghilangkan garis bawah */
-    color: inherit; /* Mewarisi warna teks dari elemen yang mengelilinginya */
+    text-decoration: none; 
+    color: inherit; 
 }
 
 /* CSS */
@@ -46,9 +46,9 @@ header a {
 
 .welcome-text {
     position: absolute;
-    top: 50%; /* Setengah dari tinggi gambar */
-    left: 50%; /* Setengah dari lebar gambar */
-    transform: translate(-50%, -50%); /* Menggeser teks ke tengah */
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
     text-align: center;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
@@ -98,8 +98,8 @@ header a {
 }
 
 .card {
-    width: clamp(100px, 80vw, 200px); /* Adjust the width as needed */
-    height: 320px; /* Adjust the height as needed */
+    width: clamp(100px, 80vw, 200px); 
+    height: 320px; 
     box-shadow: 0 0 .5rem #030426;
     outline: 2px solid #4F93F8;
     overflow: hidden;
@@ -110,7 +110,7 @@ header a {
 
 .img {
     width: 100%;
-    height: 150px; /* Adjust the image height as needed */
+    height: 150px; 
     overflow: hidden;
     position: relative;
     transition: 200ms ease-in-out transform;
@@ -184,6 +184,7 @@ header a {
     transform: scale(0);
     transition: 200ms ease-in-out transform;
 }
+
 .content {
     display: flex;
     align-items: flex-start;
@@ -191,6 +192,7 @@ header a {
     width: 1200px;
     margin-top: 10rem;
 }
+
 .content .left .single-info {
     font-size: 1rem;
     
@@ -268,8 +270,24 @@ ul {
         top: 10px;
         right: 20px;
     }
+
+    .search input {
+        width: 200px;
+    }
 }
 
+@media only screen and ( (min-width: 320px) and (max-width: 767px)) {
+    .search input {
+        width: 200px;
+    }
+
+    
+    .logo {
+        scale: 0.8;
+        padding: 0px ;
+    }
+
+}
 footer {
     margin-top: 20px;
     background-color: #030426;
@@ -284,8 +302,8 @@ footer {
 
 .sosmed .bg {
     display: flex;
-    justify-content: center; /* Center the content horizontally within the .bg div */
-    align-items: center; /* Center the content vertically within the .bg div */
+    justify-content: center; 
+    align-items: center; 
     width: 60px;
     height: 60px;
     background-color: #FFFFFF;
@@ -355,4 +373,30 @@ footer .logofooter {
 
 .search-results button:hover {
     background-color: #1353b3;
+}
+
+#tags{
+    width:80%;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+}
+
+.tag{
+    color:white;
+    padding:10px 20px;
+    background-color: #4F93F8;
+    border-radius: 50px;
+    margin:5px;
+    display:inline-block;
+    cursor: pointer;
+}
+
+.tag.highlight{
+    background-color: #1353b3;
+}
+.no-results{
+    color:white;
 }
