@@ -41,3 +41,6 @@ Pengembangan Movie search web app ini menggunakan html, css, dan javascript dala
     
 - Delete Favorite dan Watchlist
   * Untuk menghapus dari daftar, anda menampilkan detail film lagi lalu tekan icon love atau bookmarknya. Jika berubah jadi warna putih maka film tersebut sudah terhapus dari daftarnya.
+
+Klik ini untuk melihat Web Appnya :
+https://marcelindasr.github.io/D121211036_Movie-Search/
