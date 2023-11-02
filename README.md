@@ -4,7 +4,7 @@
 Movie search adalah sebuah web app yang memungkinkan pengguna untuk mencari informasi tentang film. Dengan aplikasi ini, pengguna dapat mencari film berdasarkan judul dan genrenya. Aplikasi ini menyediakan berbagai informasi terkait film, seperti sinopsis, top 10 trending film, trailer, tanggal rilis dan masih banyak lagi.
 
 ## Fitur App
-1. Pencarian Film : Anda dapat mengetikkan judul film yang anda ingin pada searchbar.
+1. Pencarian Film : Fitur ini untuk mencari film yang anda inginkan dengan cara mengetikkan judul filmnya pada searchbar.
 2. Discover/Explore : Fitur ini berada di samping kiri search bar yang ketika dipencet akan memunculkan semua film diatur mulai dari yang popularnya. Pada bagian ini ada juga fitur filter film berdasarkan genre, Anda dapat menekan genre yang anda inginkan apa.
 3. Menampilkan Detail Film : Anda bisa mendapatkan detail film dengan mengklik film yang anda inginkan nantinya akan muncul popup detail filmnya.
 4. Favorite Film : Fitur ini berguna untuk menyimpan film-film apa yang anda sukai.
