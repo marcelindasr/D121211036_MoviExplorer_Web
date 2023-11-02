@@ -186,6 +186,7 @@ header button .material-symbols-outlined {
     overflow-y: scroll;
     transform: scale(0);
     transition: 200ms ease-in-out transform;
+    z-index: 1;
 }
 
 .content {
@@ -271,7 +272,7 @@ ul {
 }
 
 .show-popup {
-    transform: scale(1); 
+    transform: scale(1);
 }
 
 .change-color { 
@@ -279,10 +280,17 @@ ul {
 }
 
 footer {
+    position: relative;
     margin-top: 20px;
     background-color: #030426;
     text-align: center;
     color:#FFFFFF;
+    z-index: 0;
+}
+
+
+footer .logofooter {
+    padding-top: 30px;
 }
 
 .sosmed {
@@ -292,14 +300,14 @@ footer {
 
 .sosmed .bg {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
     width: 60px;
     height: 60px;
     background-color: #FFFFFF;
     border-radius: 60px;
     border: 3px solid #4F93F8;
     margin-right: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .sosmed .bg .fb{
@@ -315,11 +323,6 @@ footer {
 .sosmed .bg .ig{
     width: 80%;
     height: 80%;
-}
-
-footer .logofooter {
-    position: absolute;
-    padding-top: 30px;
 }
 
 .copyright{
@@ -393,12 +396,12 @@ footer .logofooter {
 }
 
 .trailer h2 {
-    margin-bottom: 110px;
+    margin-bottom: 90px;
 }
 
 .trailer iframe {
     scale: 1.5;
-    margin-left: 200px;
+    margin-left: 100px;
 }
 
 /* responsive */
@@ -519,17 +522,22 @@ footer .logofooter {
         padding: 5px 10px;
     
     }
+    
+    .sosmed {
+        display: flex;
+        justify-content: center;
+    }
 
     .sosmed .bg {
         display: flex;
-        justify-content: center; 
-        align-items: center; 
         width: 40px;
         height: 40px;
         background-color: #FFFFFF;
         border-radius: 60px;
-        border: 2px solid #4F93F8;
+        border: 3px solid #4F93F8;
         margin-right: 10px;
+        justify-content: center;
+        align-items: center;
     }
 
     .sosmed .bg .fb{
@@ -545,12 +553,6 @@ footer .logofooter {
     .sosmed .bg .ig{
         width: 80%;
         height: 80%;
-    }
-
-    footer .logofooter {
-        position: absolute;
-        padding-top: 30px;
-        scale: 0.8;
     }
 
     .copyright{
@@ -655,45 +657,6 @@ footer .logofooter {
     
         padding: 10px 20px;
     
-    }
-
-    .sosmed .bg {
-        display: flex;
-        justify-content: center; 
-        align-items: center; 
-        width: 40px;
-        height: 40px;
-        background-color: #FFFFFF;
-        border-radius: 60px;
-        border: 2px solid #4F93F8;
-        margin-right: 10px;
-    }
-
-    .sosmed .bg .fb{
-        width: 65%;
-        height: 65%;
-    }
-
-    .sosmed .bg .twt{
-        width: 65%;
-        height: 65%;
-    }
-
-    .sosmed .bg .ig{
-        width: 80%;
-        height: 80%;
-    }
-
-    footer .logofooter {
-        position: absolute;
-        padding-top: 30px;
-        scale: 0.8;
-    }
-
-    .copyright{
-        padding-top: 10px;
-        padding-bottom: 5px;
-        font-size: 12px;
     }
 
     .content {
@@ -885,6 +848,7 @@ footer .logofooter {
         width:"1120px" ;
         height:"630px";
     }
+    
 }
 
 
