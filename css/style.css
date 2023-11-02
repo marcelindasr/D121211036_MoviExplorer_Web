@@ -604,6 +604,10 @@ footer .logofooter {
         scale: 1;
         margin-left: 0px;
     }
+
+    .logofooter img {
+        scale: 0.6;
+    }
 }
 
 /* tablet */
@@ -698,6 +702,7 @@ footer .logofooter {
         margin-left: 0px;
     }
     
+
 }
 
 /* 2xl */
